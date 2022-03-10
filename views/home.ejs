@@ -1,0 +1,21 @@
+<%- include("partials/header.ejs") -%>
+
+    <main>
+        <h2>Categories</h2>
+
+        <% categories.forEach((c)=>{ %>
+            <article class="category">
+                <a href="/category/<%= c.category_id %>" >   
+                    <img src="../images/usaFlag.png" alt="">
+                    <p><%= c.category %></p>
+                </a>
+            </article>
+        <% }) %>
+    </main>
+
+    <form action="/createCategory" method="post">
+        <input type="text" name="txtCategory" placeholder="Enter category">
+        <button type="submit">Submit</button>
+    </form>
+
+    <%- include("partials/footer.ejs") -%>
