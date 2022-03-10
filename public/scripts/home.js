@@ -38,8 +38,48 @@ router.get("/category/:categoryId", function (req, res) {
     connection.query(selectCategory, function (err, result) {
         if(err){throw err;}
 
-        res.render("category", {category:result[0].category});
+        let selectContents = `select * from contents where category_id = ${req.params.categoryId}`;
+        connection.query(selectContents, function (error, rows){
+            if(error){throw error;}
+
+            let url ="";
+
+            if(rows.length){
+               url = rows[0].videoUrl;
+            }
+
+            res.render("category", {
+                category:result[0].category,
+                categoryId: req.params.categoryId,
+                contents : rows,
+                urlContent : url
+                }
+            );
+        });
     });
 });
+
+
+router.post("/category/:categoryId/content/:contentId", (req, res)=>{
+
+
+    res.redirect("back")
+});
+
+
+router.post("/category/:categoryId/createContent", function (req, res) {
+    let content = req.body.txtContent;
+    let urlContent = req.body.txtUrlContent;
+
+    let values = [[content, true, urlContent, req.params.categoryId]]
+    let selectCategory = `insert into contents (content, state, videoUrl, category_id) values ?`;
+    connection.query(selectCategory,[values], function (err, result) {
+        if(err){throw err;}
+
+        console.log("content " + content + " successfully inserted.")
+    });
+    res.redirect("back");
+});
+
 
 module.exports = router;

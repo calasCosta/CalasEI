@@ -1,5 +1,39 @@
 <%- include("partials/header.ejs") -%>
 
-<h3 class="categoryClass"><%= category %></h3>
+<section class="menuSidebar">
+    <h4 id="categoryTitle"><%= category %></h4>
+    <div id="contents">
+        <form action="category/<%= categoryId %>/setUrl">
+            <% for(c of contents){ %>
+                <button type="button" name="<%=c.content_id%>"><%= c.content %></button>
+            <% }%>
+        </form>
+        
+        
+    </div>
+    <div class="createContent">
+        <form action="/category/<%= categoryId %>/createContent" method="post">
+            <input type="text" name="txtContent" placeholder="enter content title"> <br>
+            <input type="text" name="txtUrlContent" placeholder="enter video url"> <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    
+</section>
+
+<section class="categoryClass">
+    <iframe 
+            src="<%= urlContent%>" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+    </iframe> 
+    
+    <div class="notesSide">
+
+    </div>
+</section>
+
 
 <%- include("partials/footer.ejs") -%>

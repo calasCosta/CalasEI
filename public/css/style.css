@@ -8,7 +8,16 @@ header{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: rgb(0, 139, 173);
+    background-color: rgb(0, 9, 34);
+    height: 10vh;
+}
+
+.appName{
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .menu{
@@ -18,11 +27,11 @@ header{
 
 .menu a{
     text-decoration: none;
-    color: black;
+    color: rgb(255, 255, 255);
 }
 
 .menu a:hover{
-    color: white;
+    color: rgb(0, 234, 255);
 }
 
 
@@ -60,8 +69,9 @@ main a p{
 footer{
     text-align: center;
     opacity: 0.9;
-    background-color: rgb(0, 139, 173);
+    background-color: rgb(0, 9, 34);
     padding: 10px;
+    color: white;
 }
 
 #about{
