@@ -31,6 +31,7 @@ router.post("/createCategory", function (req, res) {
     res.redirect("back");
 });
 
+let url ="";
 
 router.get("/category/:categoryId", function (req, res) {
     
@@ -42,18 +43,19 @@ router.get("/category/:categoryId", function (req, res) {
         connection.query(selectContents, function (error, rows){
             if(error){throw error;}
 
-            let url ="";
-
             if(rows.length){
-               url = rows[0].videoUrl;
+                if(!!url === false){
+                    url = rows[0].videoUrl;
+                }
+            }else{
+                url =""
             }
 
             res.render("category", {
                 category:result[0].category,
                 categoryId: req.params.categoryId,
                 contents : rows,
-                urlContent : url
-                }
+                urlContent : url  }
             );
         });
     });
@@ -62,7 +64,13 @@ router.get("/category/:categoryId", function (req, res) {
 
 router.post("/category/:categoryId/content/:contentId", (req, res)=>{
 
+    let selectContent = "select * from contents where content_id = "+req.params.contentId;
+    connection.query(selectContent, function (err, result) {
+        if(err){throw err;}
 
+        url = result[0].videoUrl;
+    })
+    console.log("asdfdsfasdfas " + req.params.contentId)
     res.redirect("back")
 });
 

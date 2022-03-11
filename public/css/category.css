@@ -28,10 +28,8 @@
     overflow: auto;
 }
 
-#contents a{
-    display: block;
-    font-size: 14px;
-    text-decoration: none;
+#contents button{
+    cursor: pointer;
 }
 
 .createContent{

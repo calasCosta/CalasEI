@@ -3,11 +3,12 @@
 <section class="menuSidebar">
     <h4 id="categoryTitle"><%= category %></h4>
     <div id="contents">
-        <form action="category/<%= categoryId %>/setUrl">
-            <% for(c of contents){ %>
-                <button type="button" name="<%=c.content_id%>"><%= c.content %></button>
-            <% }%>
-        </form>
+        
+        <% for(c of contents){ %>
+            <form action="/category/<%= categoryId %>/content/<%= c.content_id %>"  method="post">
+                 <button type="submit" name="btnSet"><%= c.content %></button>
+            </form>
+        <% }%>
         
         
     </div>
@@ -23,15 +24,21 @@
 
 <section class="categoryClass">
     <iframe 
-            src="<%= urlContent%>" 
-            title="YouTube video player" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen>
+        src="<%= urlContent %>" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
     </iframe> 
     
     <div class="notesSide">
-
+        <form action="" method="post">
+            <input type="text" name="title" id="" placeholder="expression"> <br>
+            <textarea name="note" id="" cols="30" rows="2" placeholder="meaning"></textarea><br>
+            <textarea name="example" id="" cols="30" rows="2" placeholder="example"></textarea><br>
+            <textarea name="pronunciation" id="" cols="30" rows="1" placeholder="pronunciation"></textarea><br>
+            <button type="submit" id="btn" onclick="reloadDiv()">Take note</button>
+        </form>
     </div>
 </section>
 
