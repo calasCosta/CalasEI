@@ -1,46 +1,97 @@
 <%- include("partials/header.ejs") -%>
 
-<section class="menuSidebar">
-    <h4 id="categoryTitle"><%= category %></h4>
-    <div id="contents">
-        
-        <% for(c of contents){ %>
-            <form action="/category/<%= categoryId %>/content/<%= c.content_id %>"  method="post">
-                 <button type="submit" name="btnSet"><%= c.content %></button>
+<main id="mainContainer">
+    <section class="menuSidebar">
+        <h4 id="categoryTitle"><%= category %></h4>
+        <div id="contents">
+            
+            <% for(c of contents){ %>
+                <form action="/category/<%= categoryId %>/content/<%= c.content_id %>"  method="post">
+                     <button type="submit" name="btnSet"><%= c.content %></button>
+                </form>
+            <% }%>
+            
+            
+        </div>
+        <div class="createContent">
+            <form action="/category/<%= categoryId %>/createContent" method="post">
+                <input type="text" name="txtContent" placeholder="enter content title"> <br>
+                <input type="text" name="txtUrlContent" placeholder="enter video url"> <br>
+                <button type="submit">create content</button>
             </form>
-        <% }%>
+        </div>
         
-        
-    </div>
-    <div class="createContent">
-        <form action="/category/<%= categoryId %>/createContent" method="post">
-            <input type="text" name="txtContent" placeholder="enter content title"> <br>
-            <input type="text" name="txtUrlContent" placeholder="enter video url"> <br>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
+    </section>
+
+    <%if(!contents.length){%>
+        <h3>Still no contents. Create them in the left sidebar menu</h3>
+    <%}else{%>
+        <section class="categoryClass">
+
+            <div id="iframeDiv">
+                <iframe 
+                    src="<%= urlContent %>" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe> 
     
-</section>
-
-<section class="categoryClass">
-    <iframe 
-        src="<%= urlContent %>" 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe> 
+                <p id="penTakeNote"> 🖊 </p>
     
-    <div class="notesSide">
-        <form action="" method="post">
-            <input type="text" name="title" id="" placeholder="expression"> <br>
-            <textarea name="note" id="" cols="30" rows="2" placeholder="meaning"></textarea><br>
-            <textarea name="example" id="" cols="30" rows="2" placeholder="example"></textarea><br>
-            <textarea name="pronunciation" id="" cols="30" rows="1" placeholder="pronunciation"></textarea><br>
-            <button type="submit" id="btn" onclick="reloadDiv()">Take note</button>
-        </form>
-    </div>
-</section>
+                <form action="/category/<%= categoryId %>/content/<%= contentId %>/takeNote" method="post" class="takeNoteForm" id="takeNoteForm" hidden>
+                    <input type="text" name="expression" id="" placeholder="expression"> <br>
+                    <textarea name="meaning" id="" cols="30" rows="2" placeholder="meaning"></textarea><br>
+                    <textarea name="example" id="" cols="30" rows="2" placeholder="example"></textarea><br>
+                    <textarea name="pronunciation" id="" cols="30" rows="1" placeholder="pronunciation"></textarea><br>
+                    <button type="submit" id="btn" >Take note</button>
+                </form>
+            </div>
+    
+            <div class="notesSide" id="notesSide">
+                <% for(n of notes){ %>
+                    <div class="note">
+                        <h4><%= n.expression %></h4>
+                        <div>
 
+                            <%if(n.meaning){%>
+                                <p>M.: <%= n.meaning %></p>
+                            <%}%>
 
-<%- include("partials/footer.ejs") -%>
+                            <%if(!!n.example){%>
+                                <p>Eg.: <%= n.example %></p>
+                            <%}%>
+
+                            <%if(!!n.pronunciation){%>
+                                <p>Sound: <%= n.pronunciation %></p>
+                            <%}%>
+                        </div>
+                    </div>
+                    
+                <% } %>
+            </div>
+        </section>
+    <%}%>
+
+</main>
+
+<script>
+
+    let takeNoteForm = document.getElementById("takeNoteForm");
+    let penTakeNote = document.getElementById("penTakeNote");
+
+    let checked = false;
+    penTakeNote.addEventListener("click", function(evt){
+        checked = !checked;
+        if(checked){
+            takeNoteForm.style.display = "block";
+        }else{
+            takeNoteForm.style.display = "none";
+        }
+    });
+    
+    function reloadDiv(){
+        $("#notesSide").load(" #notesSide > *");
+    }
+    
+</script>

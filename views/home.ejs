@@ -1,5 +1,17 @@
 <%- include("partials/header.ejs") -%>
 
+    <section class="powerWelcoming">
+        <div id="left">
+            <h1>Study room created by Calas</h1>
+            <p>Use this study room to concentrate and enjoy your time studying</p>
+        </div>
+        <img id="rightImg"  src="/images/banner1.svg" alt="banner" />
+        
+        <img id="downPointer" src="/images/downPointer.svg" alt="downPointer" />
+    </section>
+
+    
+
     <main>
         <h2>Categories</h2>
 
@@ -10,12 +22,11 @@
                     <p><%= c.category %></p>
                 </a>
             </article>
-        <% }) %>
+        <% }); %>
     </main>
 
-    <form action="/createCategory" method="post">
+    <form action="/createCategory" method="post" id="createCategoryForm">
         <input type="text" name="txtCategory" placeholder="Enter category">
         <button type="submit">Submit</button>
     </form>
-
-    <%- include("partials/footer.ejs") -%>
+<%- include("partials/footer.ejs") -%> 
