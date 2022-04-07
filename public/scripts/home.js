@@ -1,4 +1,5 @@
 const express = require('express');
+const { render } = require('express/lib/response');
 const router = express.Router();
 const connection = require("./db/db");
 
@@ -59,7 +60,7 @@ router.get("/category/:categoryId", function (req, res) {
             connection.query(selectNotes, function(error, notesResult){
                 if(error){throw error;}
 
-                console.log(notesResult)
+                //console.log(notesResult)
 
                 res.render("category", {
                     category:resultCategory[0].category,
@@ -106,31 +107,6 @@ router.get("/category/:categoryId", function (req, res) {
     }
 }
 
-/* before refactoring
-function updateVideosUrl(rows){
-    if(!rows.length){
-        url = ""; 
-        contentId = 0;
-    }else{
-        if(!!url){
-            let belongsToThisCategory = false;
-            for(let content of rows){
-               if(url === content.videoUrl){
-                    belongsToThisCategory = true;
-               }
-            }
-
-            if(!belongsToThisCategory){
-                url = rows[0].videoUrl;
-            }
-        }else{
-            url = rows[0].videoUrl;
-            contentId = rows[0].content_id;
-        }
-    }
-}
-*/
-
 /**
  * Route method POST to create a new content
  */
@@ -138,13 +114,19 @@ router.post("/category/:categoryId/createContent", function (req, res) {
     let content = req.body.txtContent;
     let urlContent = req.body.txtUrlContent;
 
-    let values = [[content, true, urlContent, req.params.categoryId]]
-    let selectCategory = `insert into contents (content, state, videoUrl, category_id) values ?`;
-    connection.query(selectCategory,[values], function (err, result) {
-        if(err){throw err;}
+    if(!!content &&  urlContent.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/) ){
 
-        console.log("content " + content + " successfully inserted.")
-    });
+        let values = [[content, true, urlContent, req.params.categoryId]]
+        let selectCategory = `insert into contents (content, state, videoUrl, category_id) values ?`;
+        connection.query(selectCategory,[values], function (err, result) {
+            if(err){throw err;}
+
+            console.log("content " + content + " successfully inserted.")
+        });
+    }else{
+        console.log("invalid url format or undefined content")
+    }
+
     res.redirect("back");
 });
 
@@ -160,7 +142,8 @@ router.post("/category/:categoryId/content/:contentId", (req, res)=>{
         url = result[0].videoUrl;
         contentId = req.params.contentId;
     });
-    console.log("content:  " + req.params.contentId)
+    console.log("content:  " + req.params.contentId);
+    
     res.redirect("back")
 });
 
@@ -188,8 +171,13 @@ router.post("/category/:categoryId/content/:contentId/takeNote", (req, res)=>{
             
         });
     }
+    res.redirect("back");
+});
 
-    res.redirect("back")
+
+
+router.get("/robotRoom", function(req, res){
+    res.render("robotRoom");
 });
 
 module.exports = router;

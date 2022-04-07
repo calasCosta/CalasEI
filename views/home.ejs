@@ -15,18 +15,44 @@
     <main>
         <h2>Categories</h2>
 
-        <% categories.forEach((c)=>{ %>
+        <section >
+            <% categories.forEach((c)=>{ %>
+                <article class="category">
+                    <a href="/category/<%= c.category_id %>" >
+                        <div>
+                            <img src="../images/usaFlag.svg" alt="" class="flag">
+                            <p class="txtCategory"><%= c.category %></p>
+                        </div>  
+                    </a>
+                </article>
+            <% }); %>
+
             <article class="category">
-                <a href="/category/<%= c.category_id %>" >   
-                    <img src="../images/usaFlag.png" alt="">
-                    <p><%= c.category %></p>
+                <a href="/robotRoom" >
+                    <div>
+                        <img src="../images/robot.svg" alt="" class="flag">
+                        <p class="txtCategory">Talk to robot</p>
+                    </div>  
                 </a>
             </article>
-        <% }); %>
+
+            <article class="category">
+                <a href="/robotRoom" >
+                    <div>
+                        <img src="../images/books.png" alt="" class="flag">
+                        <p class="txtCategory">Explore Books</p>
+                    </div>  
+                </a>
+            </article>
+        </section>
+
     </main>
 
     <form action="/createCategory" method="post" id="createCategoryForm">
         <input type="text" name="txtCategory" placeholder="Enter category">
         <button type="submit">Submit</button>
     </form>
+
 <%- include("partials/footer.ejs") -%> 
+
+

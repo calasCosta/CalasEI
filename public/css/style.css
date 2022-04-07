@@ -3,15 +3,30 @@ body{
     padding: 0;
     font-family: 'Padauk', sans-serif;
     line-height: 1.5;
-    background-color: black;
-    color: white;
+    background-color: #164d58;
+    
 }
+
+body::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+    background: rgb(0, 0, 0);        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(255, 255, 255);    /* color of the scroll thumb */
+    border-radius: 20px;       
+    height: 40px;
+}
+
 
 header{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #000000;
+    background-color: #164d58;
     height: 10vh;
 }
 
@@ -40,7 +55,7 @@ header{
     border-radius: 10px;
 }
 
- /** power side **/
+ /** hero side **/
 
  .powerWelcoming{
     width: 70%;
@@ -85,7 +100,7 @@ header{
 
 /**** main  ****/
 main{
-    width: 90%;
+    width: 60%;
     text-align: center;
     margin: 10% auto;
 }
@@ -94,14 +109,43 @@ main{
 .category{
     width: 200px;
     border-radius: 10px;
-    box-shadow: 0 0 0px 10px rgba(118, 182, 212, 0.219);
-    margin: 15px;
+    margin: 2%;
     display: inline-block;
-    background-color: #c4c4c4;
 }
 
-.category:hover{
-    box-shadow: 0 0 0px 10px rgba(144, 159, 168, 0.575);
+.category div{
+    width: 100%;
+    height: 100px;
+    margin: 0;
+    margin-top: 50px;
+    border-radius: 5px;
+    position: relative;background-color: #c7bfbf;
+}
+
+.category #centerDiv{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 0 0 5px rgb(0, 0, 0);
+    position: relative;
+    margin: auto;
+    margin-top: -75px;
+}
+
+.category img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 0 0 5px rgba(200, 201, 201, 0.555);
+    position: relative;
+    margin-top: -45px;
+    background-color: #164d58;
+}
+
+.category div:hover{
+    box-shadow: 0 0 2px 5px rgba(0, 21, 27, 0.685);
 }
 
 
@@ -130,7 +174,6 @@ footer{
     min-height: 200px;
     opacity: 0.9;
     padding: 10px;
-    color: rgb(255, 255, 255);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -200,11 +243,10 @@ footer{
         width: 95%;
      }
 
-     
 }
 
 @media screen and (max-width: 600px) {
-    .powerWelcoming{
+    .powerWelcoming {
         width: 100%;
         flex-direction: column-reverse;
         justify-content: flex-end;

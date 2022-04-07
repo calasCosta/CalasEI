@@ -2,6 +2,7 @@
     width: 100%;
     height: 90vh;
     display: flex;
+    justify-content: space-between;
     margin: 0;
 }
 
@@ -9,7 +10,7 @@
 .menuSidebar{
     width: 20%;
     height: 100%;
-    box-shadow: 9px 0px 0px rgba(231, 231, 231, 0.07);
+
 }
 
 #categoryTitle{
@@ -20,21 +21,40 @@
 }
 
 #contents{
-    height: 68vh;
-    margin-top: 0;
+    height: 70vh;
+    margin-bottom: 5%;
     overflow: auto;
+}
+
+#contents img{
+    width: 100%;
+}
+
+#contents::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+}
+
+#contents::-webkit-scrollbar-track {
+    background: rgb(0, 0, 0);        /* color of the tracking area */
+}
+
+#contents::-webkit-scrollbar-thumb {
+    background-color: rgb(31, 31, 31);    /* color of the scroll thumb */
+    border-radius: 20px;       
+    height: 40px;
 }
 
 #contents button{
     width: 95%;
-    margin: 4px 0;
     padding-top: 8px;
     padding-bottom: 8px;
+    margin-bottom: 4%;
     background: none;
     border: none;
     color: white;
     line-height: 1.5em;
     text-align: left;
+    cursor: pointer;
 }
 
 #contents button:hover{
@@ -72,13 +92,12 @@
 }
 
 #iframeDiv{
-    width: 50%;
+    min-width: 70%;
 }
 
 iframe{
     width: 100%;
-    height: 50vh;
-    border-radius: 4px;
+    height: 60vh;
 }
 
 
@@ -98,7 +117,7 @@ iframe{
     background-color: rgb(236, 236, 236);
     margin: 2px;
     padding: 4px;
-    width: 100%;
+    width: 90%;
 }
 
 .takeNoteForm button{
@@ -107,11 +126,10 @@ iframe{
 
 .notesSide{
     background-color: rgba(7, 7, 7, 0.89);
-    width: 50%;
     height: 100%;
+    min-width: 30%;
     border-radius: 4px;
     overflow: auto;
-    box-shadow: 0 6px 2px 5px rgb(0, 0, 0, 0.5);
     text-align: left;
 }
 
@@ -150,6 +168,8 @@ iframe{
 
     .notesSide{
         overflow: visible;
+        padding: 10px 0;
+        margin-bottom: min(10%);
     }
 
     #iframeDiv, .notesSide{
@@ -161,7 +181,7 @@ iframe{
     }
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 650px) {
     .appName{
         font-size: 13px;
     }
@@ -170,8 +190,20 @@ iframe{
     }
 
     #mainContainer{
-        min-height: 90vh;
-        flex-direction: column reverse;
+        display: block;
     }
     
+    iframe{
+        width: 100%;
+        height: 30vh;
+    }
+
+    #mainContainer section{
+        width: 95%;
+        margin: 4% auto;
+    }
+
+    #iframeDiv{
+        
+    }
 }
