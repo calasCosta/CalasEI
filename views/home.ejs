@@ -5,7 +5,7 @@
             <h1>Study room created by Calas</h1>
             <p>Use this study room to concentrate and enjoy your time studying</p>
         </div>
-        <img id="rightImg"  src="/images/banner1.svg" alt="banner" />
+        <img id="rightImg"  src="/images/banner.svg" alt="banner" />
         
         <img id="downPointer" src="/images/downPointer.svg" alt="downPointer" />
     </section>
@@ -19,29 +19,23 @@
             <% categories.forEach((c)=>{ %>
                 <article class="category">
                     <a href="/category/<%= c.category_id %>" >
-                        <div>
-                            <img src="../images/usaFlag.svg" alt="" class="flag">
-                            <p class="txtCategory"><%= c.category %></p>
-                        </div>  
+                        <img src="../images/usaFlag.svg" alt="" class="flag">
+                        <p class="txtCategory"><%= c.category %></p>  
                     </a>
                 </article>
             <% }); %>
 
             <article class="category">
                 <a href="/robotRoom" >
-                    <div>
-                        <img src="../images/robot.svg" alt="" class="flag">
-                        <p class="txtCategory">Talk to robot</p>
-                    </div>  
+                    <img src="../images/robot.svg" alt="" class="flag">
+                    <p class="txtCategory">Talk to robot</p>
                 </a>
             </article>
 
             <article class="category">
                 <a href="/robotRoom" >
-                    <div>
-                        <img src="../images/books.png" alt="" class="flag">
-                        <p class="txtCategory">Explore Books</p>
-                    </div>  
+                    <img src="../images/books.png" alt="" class="flag">
+                    <p class="txtCategory">Explore Books</p>
                 </a>
             </article>
         </section>
@@ -49,8 +43,11 @@
     </main>
 
     <form action="/createCategory" method="post" id="createCategoryForm">
-        <input type="text" name="txtCategory" placeholder="Enter category">
-        <button type="submit">Submit</button>
+        <div>
+            <input type="text" name="txtCategory" placeholder="Enter category" class="inputField"> 
+            <input type="file" name="photoCategory" id="photoCategory" class="inputField">
+            <button type="submit" class="btnCreateCategory" id="btnCreateCategory">Submit</button>
+        </div>
     </form>
 
 <%- include("partials/footer.ejs") -%> 

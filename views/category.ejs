@@ -5,140 +5,44 @@
     <%if(!contents.length){%>
         <h3>Still no contents. Create them in the left sidebar menu</h3>
     <%}else{%>
-        <section class="categoryClass" id="categoryId">
-
-            <div id="iframeDiv">
-                <iframe 
-                    src="<%= urlContent %>?autoplay=1" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe> 
-    
-                <p id="penTakeNote"> 🖊 </p>
-    
-                <form action="/category/<%= categoryId %>/content/<%= contentId %>/takeNote" method="post" class="takeNoteForm" id="takeNoteForm" hidden>
-                    <input type="text" name="expression" id="" placeholder="expression"> <br>
-                    <textarea name="meaning" id="" cols="30" rows="2" placeholder="meaning"></textarea><br>
-                    <textarea name="example" id="" cols="30" rows="2" placeholder="example"></textarea><br>
-                    <textarea name="pronunciation" id="" cols="30" rows="1" placeholder="pronunciation"></textarea><br>
-                    <button type="submit" id="btnTakeNote">Take note</button>
-                </form>
-            </div>
-    
-            <div class="notesSide" id="notessSide">
-                <% for(n of notes){ %>
-                    <div class="note">
-                        <h4><%= n.expression %></h4>
-                        <div>
-
-                            <%if(n.meaning){%>
-                                <p>M.: <%= n.meaning %></p>
-                            <%}%>
-
-                            <%if(!!n.example){%>
-                                <p>Eg.: <%= n.example %></p>
-                            <%}%>
-
-                            <%if(!!n.pronunciation){%>
-                                <p>Sound: <%= n.pronunciation %></p>
-                            <%}%>
-                        </div>
-                    </div>
-                    
-                <% } %>
-            </div>
-        </section>
-    <%}%>
-
-    <section class="menuSidebar">
         <h4 id="categoryTitle"><%= category %></h4>
         <div id="contents">
             
             <% for(c of contents){ %>
-                <form action="/category/<%= categoryId %>/content/<%= c.content_id %>"  method="post">
-                     
-                        <button type="submit" name="btnSet" class="btnSelectContent">
-                            <img class="thumbnail" src="" alt="" />
-                            <%= c.content %>
-                        </button>
-                    
-                    <p class="video-url" hidden><%= c.videoUrl%></p>
-                </form>
-            <% }%>
-            
-            
+                <div class="content">
+                    <a href="/category/<%= categoryId %>/content/<%= c.content_id %>">
+                        <img class="thumbnail" src="" alt="cccc"/>
+                        <p><%= c.content %></p>
+                        <p class="video-url" hidden><%= c.videoUrl%></p>
+                    </a>
+                </div>
+            <% } %>
         </div>
-        <div class="createContent" id="createContent">
-            <form action="/category/<%= categoryId %>/createContent" method="post">
-                <input 
-                        type="text" 
-                        name="txtContent" 
-                        placeholder="enter the video title" 
-                        oninvalid="this.setCustomValidity('Please provide the video title.')"
-                        required
-                /> <br>
-                <input 
-                        type="text" 
-                        name="txtUrlContent" 
-                        id="txtUrlContent"
-                        placeholder="enter the video url" 
-                        oninvalid="this.setCustomValidity('Please provide the video url.')"
-                        required
-                /> <br>
-                <button type="submit" id="btnCreateContent">create content</button>
-            </form>
-        </div>
-        
-    </section>
+    <%}%>
 
+    <div class="createContent" id="createContent">
+        <form action="/category/<%= categoryId %>/createContent" method="post">
+            <input 
+                    type="text" 
+                    name="txtContent" 
+                    placeholder="enter the video title" 
+                    oninvalid="this.setCustomValidity('Please provide the video title.')"
+                    required
+            /> <br>
+            <input 
+                    type="text" 
+                    name="txtUrlContent" 
+                    id="txtUrlContent"
+                    placeholder="enter the video url" 
+                    oninvalid="this.setCustomValidity('Please provide the video url.')"
+                    required
+            /> <br>
+            <button type="submit" id="btnCreateContent">create content</button>
+        </form>
+    </div>
 </section>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script type="text/javascript">
-
-    let takeNoteForm = document.getElementById("takeNoteForm");
-    let penTakeNote = document.getElementById("penTakeNote");
-
-    let checked = false;
-    penTakeNote.addEventListener("click", function(evt){
-        checked = !checked;
-        if(checked){
-            takeNoteForm.style.display = "block";
-        }else{
-            takeNoteForm.style.display = "none";
-        }
-    });
-    
-    let btnCreateContent = document.getElementById("btnCreateContent");
-    btnCreateContent.addEventListener("click", function(evt){
-        //evt.preventDefault();
-        
-        $("#createContent").load(" #createContent > *");
-
-    });
-
-    let btnTakeNote = document.getElementById("btnTakeNote");
-    btnTakeNote.addEventListener("click", function(evt){
-        
-    });
-
-
-    (function(){
-        let btnSelectContent = document.getElementsByClassName("btnSelectContent");
-        let categoryId = document.getElementsById("categoryId");
-        for(let i = 0; i < urls.btnSelectContent; i++){
-            btnSelectContent[i].addEventListener("click", function(evt){
-                $("#categoryId").load(location.href + " #categoryId");
-            })
-        }
-    })
-    
-
-    
-    
 
     //
     /**
@@ -148,19 +52,21 @@
     (function(){
         let urls = document.getElementsByClassName("video-url");
         let thumbnail = document.getElementsByClassName("thumbnail");
+        alert(thumbnail[0].src)
 
         for(let i = 0; i < urls.length; i++){
             let url = urls[i].innerText;
             let arr = url.split("/")
             let url_id = arr[arr.length-1];
 
+            
+
             var video_thumbnail = $('<img src="//img.youtube.com/vi/'+url_id+'/0.jpg">');
             let thumbnailImageSrc = video_thumbnail[0].src;
 
             thumbnail[i].src = thumbnailImageSrc;
+            alert(video_thumbnail[0].src)
         }
-
-         
-    }())
+    }());
 
 </script>

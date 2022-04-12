@@ -21,21 +21,27 @@ router.get("/", function (req, res) {
 router.post("/createCategory", function (req, res) {
     let category = req.body.txtCategory;
 
-    let selectCategory = `select * from categories where category = "${category}"`
-    connection.query(selectCategory, (err, result)=>{
-        if(err){throw err;}
+    if(!!category){
+        let selectCategory = `select * from categories where category = "${category}"`
+        connection.query(selectCategory, (err, result)=>{
+            if(err){throw err;}
 
-        if(result.length){
-            throw new Error("Category already exists.");
-        }
+            if(result.length){
+                throw new Error("Category already exists.");
+            }
 
-        let insertCategory = `insert into categories (category, state) values ?`
-        connection.query(insertCategory, [[[category, true]]], function(err, rows){
-            if (err) {throw err;}
+            let insertCategory = `insert into categories (category, state) values ?`
+            connection.query(insertCategory, [[[category, true]]], function(err, rows){
+                if (err) {throw err;}
 
-            console.log("category " + category + " successfully inserted.")
-        });
-    })
+                console.log("category " + category + " successfully inserted.")
+            });
+        })
+    }else{
+        console.log("Cannot create a category width empty name");
+    }
+
+    
     res.redirect("back");
 });
 
@@ -56,22 +62,13 @@ router.get("/category/:categoryId", function (req, res) {
 
             updateVideosUrl(rows);
 
-            let selectNotes  = `select * from notes where content_id= ${contentId}`;
-            connection.query(selectNotes, function(error, notesResult){
-                if(error){throw error;}
-
-                //console.log(notesResult)
-
-                res.render("category", {
-                    category:resultCategory[0].category,
-                    categoryId: req.params.categoryId,
-                    contents : rows,
-                    urlContent : url,
-                    contentId: contentId,
-                    notes: notesResult}
-                );
-            });
-
+            res.render("category", {
+                category:resultCategory[0].category,
+                categoryId: req.params.categoryId,
+                contents : rows,
+                urlContent : url,
+                contentId: contentId}
+            );
         });
     });
 });
@@ -133,7 +130,7 @@ router.post("/category/:categoryId/createContent", function (req, res) {
 /**
  * Route method POST to select a content on sidebar
  */
-router.post("/category/:categoryId/content/:contentId", (req, res)=>{
+router.get("/category/:categoryId/content/:contentId", (req, res)=>{
 
     let selectContent = "select * from contents where content_id = "+req.params.contentId;
     connection.query(selectContent, function (err, result) {
@@ -141,10 +138,20 @@ router.post("/category/:categoryId/content/:contentId", (req, res)=>{
 
         url = result[0].videoUrl;
         contentId = req.params.contentId;
+        
+        let selectNotes  = `select * from notes where content_id= ${contentId}`;
+        connection.query(selectNotes, function(error, notesResult){
+            if(error){throw error;}
+
+            res.render("content", {
+                categoryId: req.params.categoryId, 
+                contentId: req.params.contentId,
+                notes: notesResult,
+                urlContent: url
+            });
+        });
     });
-    console.log("content:  " + req.params.contentId);
     
-    res.redirect("back")
 });
 
 /**

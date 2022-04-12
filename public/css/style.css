@@ -3,7 +3,7 @@ body{
     padding: 0;
     font-family: 'Padauk', sans-serif;
     line-height: 1.5;
-    background-color: #164d58;
+    background-color: rgb(248, 248, 248);
     
 }
 
@@ -26,8 +26,8 @@ header{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #164d58;
     height: 10vh;
+    background-color: rgb(82, 169, 196);
 }
 
 .appName{
@@ -35,7 +35,7 @@ header{
     text-decoration: none;
     font-size: 20px;
     font-weight: bold;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .menu{
@@ -45,7 +45,7 @@ header{
 
 .menu a{
     text-decoration: none;
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 0.5em;
     font-size: 14px;
 }
@@ -58,13 +58,14 @@ header{
  /** hero side **/
 
  .powerWelcoming{
-    width: 70%;
+    width: 100%;
     margin: auto;
     height: 90vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
     position: relative;
+    background-color: rgb(82, 169, 196);
  }
 
 #left {
@@ -108,54 +109,28 @@ main{
 
 .category{
     width: 200px;
+    height: 200px;
     border-radius: 10px;
-    margin: 2%;
+    margin: 4%;
     display: inline-block;
+    background-color: rgb(233, 233, 233);
 }
 
-.category div{
-    width: 100%;
-    height: 100px;
-    margin: 0;
-    margin-top: 50px;
-    border-radius: 5px;
-    position: relative;background-color: #c7bfbf;
-}
+.category:hover{
+    box-shadow: 18px 18px 0px #4392c73d;
 
-.category #centerDiv{
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    padding: 5px;
-    box-shadow: 0 0 0 5px rgb(0, 0, 0);
-    position: relative;
-    margin: auto;
-    margin-top: -75px;
 }
-
-.category img{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    padding: 5px;
-    box-shadow: 0 0 0 5px rgba(200, 201, 201, 0.555);
-    position: relative;
-    margin-top: -45px;
-    background-color: #164d58;
-}
-
-.category div:hover{
-    box-shadow: 0 0 2px 5px rgba(0, 21, 27, 0.685);
-}
-
 
 main a{
     text-decoration: none;
     text-align: center;
 }
 
-main img{
-    width: 100%;
+.category img{
+    width: 90%;
+    height: 50%;
+    margin: 10% auto;
+
 }
 
 main a p{
@@ -167,6 +142,17 @@ main a p{
     text-align: center;
 }
 
+.inputField, .btnCreateCategory{
+    display: block;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+#photoCategory *{
+    padding: 10px;
+    margin: 10px;
+}
 
 /***** footer ****/
 footer{
@@ -177,6 +163,7 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(82, 169, 196);
 }
 
 
@@ -264,5 +251,9 @@ footer{
     #rightImg {
         width: 95%;
         margin: 20% 4% 10% 4%;
+    }
+
+    .category{
+        margin: 20px auto;
     }
 }
