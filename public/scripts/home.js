@@ -1,13 +1,12 @@
 const express = require('express');
-const { render } = require('express/lib/response');
 const router = express.Router();
 const connection = require("./db/db");
+const fileupload = require("express-fileupload");
 
 /**
  * Route method get to render the main page
  */
 router.get("/", function (req, res) {
-
     connection.query("select * from categories", function (err, rows) {
         if(err){throw err;}
         res.render("home", {categories:rows});
@@ -15,23 +14,38 @@ router.get("/", function (req, res) {
 });
 
 
+router.use(fileupload());
+router.use(express.json());
+
 /**
  * Route method post to create the categories
  */
 router.post("/createCategory", function (req, res) {
+
     let category = req.body.txtCategory;
+
+    if(!req.files){
+        throw new Error("File not found");
+    }
+    let image = req.files.photoCategory;
+    
 
     if(!!category){
         let selectCategory = `select * from categories where category = "${category}"`
         connection.query(selectCategory, (err, result)=>{
             if(err){throw err;}
 
-            if(result.length){
-                throw new Error("Category already exists.");
-            }
+            if(result.length){  throw new Error("Category already exists.");}
 
-            let insertCategory = `insert into categories (category, state) values ?`
-            connection.query(insertCategory, [[[category, true]]], function(err, rows){
+            image.mv(`public/images/${image.name}`, async(err)=>{
+                if(err){throw err;}
+                
+                console.log(`${image.name} uploaded successfully`);
+            });
+
+            let imagePath = "../images/"+image.name;
+            let insertCategory = `insert into categories (category, imagePath, state) values ?`
+            connection.query(insertCategory, [[[category, imagePath, true]]], function(err, rows){
                 if (err) {throw err;}
 
                 console.log("category " + category + " successfully inserted.")
@@ -106,14 +120,39 @@ router.get("/category/:categoryId", function (req, res) {
 
 /**
  * Route method POST to create a new content
+ * https://youtu.be/lBI98KmZLlc
+ * https://www.youtube.com/embed/aILNoBMDdnU
+ * https://www.youtube.com/watch?v=wOJmbQ0mvik
  */
 router.post("/category/:categoryId/createContent", function (req, res) {
     let content = req.body.txtContent;
     let urlContent = req.body.txtUrlContent;
 
-    if(!!content &&  urlContent.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/) ){
+    
 
-        let values = [[content, true, urlContent, req.params.categoryId]]
+    let secureLink = (function(){
+     
+        if(urlContent.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/)){
+            if(urlContent.includes("=")){
+                return urlContent.split("=")[1]
+            }else{
+                let secure = urlContent.split("/");
+                return secure[secure.length-1]
+            }
+        }else if(urlContent.match(/youtu\.be*(.{11})/)){
+            let secure = urlContent.split("/");
+            return secure[secure.length-1];
+        }
+        return "";
+    }());
+
+    if(!!content &&  !!secureLink){
+
+        secureEmbedUrl = `https://www.youtube.com/embed/${secureLink}`;
+
+        //console.log("yeeeeeeeeeessssssss  " + secureEmbedUrl)
+
+        let values = [[content, true, secureEmbedUrl, req.params.categoryId]]
         let selectCategory = `insert into contents (content, state, videoUrl, category_id) values ?`;
         connection.query(selectCategory,[values], function (err, result) {
             if(err){throw err;}
@@ -147,7 +186,8 @@ router.get("/category/:categoryId/content/:contentId", (req, res)=>{
                 categoryId: req.params.categoryId, 
                 contentId: req.params.contentId,
                 notes: notesResult,
-                urlContent: url
+                urlContent: url,
+                categoryId : req.params.categoryId
             });
         });
     });
@@ -168,20 +208,31 @@ router.post("/category/:categoryId/content/:contentId/takeNote", (req, res)=>{
         let values = [[expression, meaning, example, pronunciation, req.params.contentId]]
         let createNote = `insert into notes (expression, meaning, example, pronunciation, content_id) values ?`;
 
-        
-
         connection.query(createNote, [values], function (err, result) {
             if(err){throw err;}
 
             console.log("content fk:  " + req.params.contentId)
             console.log("expression:  " + expression + "taken successfully")
-            
         });
     }
-    res.redirect("back");
+
+    return;
+    //res.redirect("back");
 });
 
-
+/**
+ * Route method post to delete note of the receive parameter :noteId
+ */
+router.post("/category/:categoryId/content/:contentId/deleteNote/:noteId", function(req, res){
+    let noteId = req.params.noteId;
+    let deleteNoteQuery = "delete from notes where note_id="+noteId;
+    connection.query(deleteNoteQuery,function(error, result){
+        if(error){throw error;}
+        console.log(result.affectedRows +"row affected");
+    });
+    return;
+    //res.redirect("back");
+});
 
 router.get("/robotRoom", function(req, res){
     res.render("robotRoom");

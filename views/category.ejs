@@ -7,12 +7,16 @@
     <%}else{%>
         <h4 id="categoryTitle"><%= category %></h4>
         <div id="contents">
-            
             <% for(c of contents){ %>
                 <div class="content">
                     <a href="/category/<%= categoryId %>/content/<%= c.content_id %>">
                         <img class="thumbnail" src="" alt="cccc"/>
-                        <p><%= c.content %></p>
+
+                        <%if(c.content.length > 75){%>
+                            <p class="videoTitle"><%= c.content.substring(0, 75) %>...</p>
+                        <% } else{ %>
+                            <p class="videoTitle"><%= c.content %></p>
+                        <% } %>
                         <p class="video-url" hidden><%= c.videoUrl%></p>
                     </a>
                 </div>
@@ -20,6 +24,7 @@
         </div>
     <%}%>
 
+    
     <div class="createContent" id="createContent">
         <form action="/category/<%= categoryId %>/createContent" method="post">
             <input 
@@ -40,11 +45,11 @@
             <button type="submit" id="btnCreateContent">create content</button>
         </form>
     </div>
+    
 </section>
 
 <script type="text/javascript">
 
-    //
     /**
     *   Function to get thumbnail from a videoUrl  
     *   Get an url and split it by "/" and get the urlId witch the last element of splitted result arr 
@@ -52,20 +57,13 @@
     (function(){
         let urls = document.getElementsByClassName("video-url");
         let thumbnail = document.getElementsByClassName("thumbnail");
-        alert(thumbnail[0].src)
 
-        for(let i = 0; i < urls.length; i++){
+        for(let i = 0; i < urls.length; i++){  
             let url = urls[i].innerText;
             let arr = url.split("/")
-            let url_id = arr[arr.length-1];
-
+            let url_id = arr[arr.length-1];  
             
-
-            var video_thumbnail = $('<img src="//img.youtube.com/vi/'+url_id+'/0.jpg">');
-            let thumbnailImageSrc = video_thumbnail[0].src;
-
-            thumbnail[i].src = thumbnailImageSrc;
-            alert(video_thumbnail[0].src)
+            thumbnail[i].src = '//img.youtube.com/vi/'+url_id+'/0.jpg';
         }
     }());
 

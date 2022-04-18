@@ -1,64 +1,98 @@
-<%- include("partials/header.ejs") -%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="/css/content.css">
 
-<div id="iframeDiv">
-    <iframe 
-        src="<%= urlContent %>?autoplay=1" 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe> 
-
-    <p id="penTakeNote"> 🖊 </p>
-
-    <form action="/category/<%= categoryId %>/content/<%= contentId %>/takeNote" method="post" class="takeNoteForm" id="takeNoteForm" hidden>
-        <input type="text" name="expression" id="" placeholder="expression"> <br>
-        <textarea name="meaning" id="" cols="30" rows="2" placeholder="meaning"></textarea><br>
-        <textarea name="example" id="" cols="30" rows="2" placeholder="example"></textarea><br>
-        <textarea name="pronunciation" id="" cols="30" rows="1" placeholder="pronunciation"></textarea><br>
-        <button type="submit" id="btnTakeNote">Take note</button>
-    </form>
-</div>
-
-<div class="notesSide" id="notesSide">
-    <% for(n of notes){ %>
-        <div class="note">
-            <h4><%= n.expression %></h4>
-            <div>
-
-                <%if(n.meaning){%>
-                    <p>M.: <%= n.meaning %></p>
-                <%}%>
-
-                <%if(!!n.example){%>
-                    <p>Eg.: <%= n.example %></p>
-                <%}%>
-
-                <%if(!!n.pronunciation){%>
-                    <p>Sound: <%= n.pronunciation %></p>
-                <%}%>
-            </div>
-        </div>
-    <% } %>
-</div>
-
-<script type="text/javascript">
-
-    let takeNoteForm = document.getElementById("takeNoteForm");
-    let penTakeNote = document.getElementById("penTakeNote");
-
-    let checked = false;
-    penTakeNote.addEventListener("click", function(evt){
-        checked = !checked;
-        if(checked){
-            takeNoteForm.style.display = "block";
-        }else{
-            takeNoteForm.style.display = "none";
-        }
-    });
-
-    let btnTakeNote = document.getElementById("btnTakeNote");
-    btnTakeNote.addEventListener("click", function(evt){
+</head>
+<body>
+   <section class="mainPart" >
         
-    });
-</script>
+        <div>
+            <a href="/category/<%= categoryId %>" id="goBack"> << </a>
+        </div>
+
+        <iframe 
+            width="98%" 
+            height="80%" 
+            src="<%= urlContent %>?autoplay=1" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+        ></iframe> 
+
+    </section>
+
+    <section class="noteSide">
+            <div class="notes" id="notess">
+                <p>Notes</p>
+                <% for(n of notes){ %>
+                    <div class="note">
+                        <h4><%= n.expression %></h4>
+                        <div>
+                            <%if(n.meaning){%>
+                                <p>M.: <%= n.meaning %></p>
+                            <%}%>
+
+                            <%if(!!n.example){%>
+                                <p>Eg.: <%= n.example %></p>
+                            <%}%>
+
+                            <%if(!!n.pronunciation){%>
+                                <p>Sound: <%= n.pronunciation %></p>
+                            <%}%>
+                        </div>
+                        <form action="/category/<%= categoryId %>/content/<%= contentId %>/deleteNote/<%= n.note_id %>" method="post">
+                            <button type="submit" class="trash-can" id="trash-can" onclick="updateDiv()">🗑</button>
+                        </form>
+                    </div>
+                <% } %>
+            </div>
+        
+
+        <div class="takeNote">
+            <p id="penTakeNote"> 🖊 </p>
+
+            <form action="/category/<%= categoryId %>/content/<%= contentId %>/takeNote" method="post" class="takeNoteForm" id="takeNoteForm" hidden>
+                <input type="text" name="expression" id="" placeholder="expression"> <br>
+                <textarea name="meaning" id="" cols="30" rows="2" placeholder="meaning"></textarea><br>
+                <textarea name="example" id="" cols="30" rows="2" placeholder="example"></textarea><br>
+                <textarea name="pronunciation" id="" cols="30" rows="1" placeholder="pronunciation"></textarea><br>
+                <button type="submit" id="btnTakeNote" onclick="updateDiv()">Take note</button>
+            </form>
+        </div> 
+    </section>
+
+
+    <script>
+        function updateDiv(){ 
+            $("#notess").load(" #notess > *");
+        }
+
+        let takeNoteForm = document.getElementById("takeNoteForm");
+        let penTakeNote = document.getElementById("penTakeNote");
+
+        let checked = false;
+        penTakeNote.addEventListener("click", function(evt){
+            checked = !checked;
+            if(checked){
+                takeNoteForm.style.display = "block";
+                penTakeNote.innerText = "X"
+            }else{
+                takeNoteForm.style.display = "none";
+                penTakeNote.innerText = "🖊"
+            }
+        });
+
+        let btnTakeNote = document.getElementById("btnTakeNote");
+        btnTakeNote.addEventListener("click", function(evt){
+            
+        });
+    </script>
+</body>
+</html>

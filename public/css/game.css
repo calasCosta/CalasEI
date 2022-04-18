@@ -1,0 +1,91 @@
+#gameTitle{
+    text-align: center;
+    margin-top: 4%;
+}
+
+.games{
+    text-align: center;
+    margin: 4% auto;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.gameCategory{
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    margin: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameCategory a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#grammarGame{
+    background-color: #FF5959;
+}
+
+#vocabularyGame{
+    background-color: rgb(0, 170, 212);
+}
+
+#phrasesGame{
+    background-color: #40827d;
+}
+
+
+/**************************************************** vocabulary game ************/
+.vocabularyGameSection{
+    height: 85vh;
+    width: 100%;
+    text-align: center;
+}
+.leftOptions, .rightOptions{
+    display: inline-block;
+    width: 30%;
+    margin: 2%;
+}
+
+.vocAnswerOptions{
+    width: 100%;
+    height: 30vh;
+    margin : 15px;
+    box-shadow: 0 0 5px 0 black;
+    border-radius: 10px;
+}
+
+.vocAnswerOptions img{
+    width: 85%;
+    height: 90%;
+    margin-top: 2%;
+}
+
+@media only screen and (max-width: 815px) {
+    .leftOptions, .rightOptions{
+        display: inline-block;
+        width: 40%;
+    }
+
+    .vocAnswerOptions{
+        height: 25vh;
+        margin : 15px 2%;
+    }
+
+    .vocAnswerOptions img{
+        width: 90%;
+        height: 75%;
+        margin-top: 10%;
+    }
+    
+    .vocQuestion{
+        font-size: 14px;
+        margin: 2%;
+    }
+}

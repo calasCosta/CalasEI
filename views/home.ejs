@@ -19,7 +19,7 @@
             <% categories.forEach((c)=>{ %>
                 <article class="category">
                     <a href="/category/<%= c.category_id %>" >
-                        <img src="../images/usaFlag.svg" alt="" class="flag">
+                        <img src="<%= c.imagePath %>" alt="" class="flag">
                         <p class="txtCategory"><%= c.category %></p>  
                     </a>
                 </article>
@@ -27,7 +27,7 @@
 
             <article class="category">
                 <a href="/robotRoom" >
-                    <img src="../images/robot.svg" alt="" class="flag">
+                    <img src="../images/robot.png" alt="" class="flag">
                     <p class="txtCategory">Talk to robot</p>
                 </a>
             </article>
@@ -42,7 +42,7 @@
 
     </main>
 
-    <form action="/createCategory" method="post" id="createCategoryForm">
+    <form action="/createCategory" method="post" enctype="multipart/form-data" id="createCategoryForm" >
         <div>
             <input type="text" name="txtCategory" placeholder="Enter category" class="inputField"> 
             <input type="file" name="photoCategory" id="photoCategory" class="inputField">

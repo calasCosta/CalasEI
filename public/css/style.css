@@ -114,10 +114,11 @@ main{
     margin: 4%;
     display: inline-block;
     background-color: rgb(233, 233, 233);
+    box-shadow: 15px 15px 0px #7babcc3d;
 }
 
 .category:hover{
-    box-shadow: 18px 18px 0px #4392c73d;
+    box-shadow: 15px 15px 0px #1c7dbe3d;
 
 }
 
@@ -139,14 +140,12 @@ main a p{
 }
 
 #createCategoryForm{
-    text-align: center;
+    
 }
 
 .inputField, .btnCreateCategory{
     display: block;
-    padding: 10px;
     margin: 10px;
-    border-radius: 10px;
 }
 
 #photoCategory *{
@@ -226,9 +225,7 @@ footer{
 
 
 @media screen and (max-width: 992px) {
-    .powerWelcoming{
-        width: 95%;
-     }
+    
 
 }
 

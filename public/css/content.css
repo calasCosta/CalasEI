@@ -1,0 +1,148 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(0, 95, 104);
+    font-family: 'Padauk', sans-serif;
+    display: flex;
+    justify-content: center;
+}
+.mainPart{
+    height: 95vh;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.mainPart div{
+    width: 100%;
+    margin: 4%;
+}
+
+#goBack{
+    margin: 10px;
+    padding: 3px;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+
+#goBack:hover{
+    color: rgb(0, 0, 0);
+}
+
+.noteSide{
+    width: 34%;
+    height: 95vh;
+    background-color: rgb(192, 201, 183);
+    margin-top: 1%;
+    box-shadow: 0 0 5px 0 black;
+    border-radius: 10px;
+}
+
+.notes div{
+    display: flex;
+    align-items: center;
+}
+
+.notes{
+    height: 75%;
+    overflow: auto;
+    border-radius: 10px;
+}
+
+.text{
+    color: rgb(17, 5, 185);
+    border-radius: 5px;
+    margin: 0 2%;
+    font-weight: bold;
+}
+
+.meaning{
+    margin-right: 2%;
+    border-radius: 5px;
+}
+
+
+.takeNote{
+    width: 100%;
+    height: 25.2%;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(15, 88, 93);
+    position: relative;
+}
+
+.takeNote form {
+    text-align: center;
+}
+
+#penTakeNote{
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 815px) {
+    body {
+        flex-direction: column;
+    }
+
+    .mainPart{
+        height: 50vh;
+        width: 100%;
+    }
+
+    .noteSide{
+        width: 98%;
+        height: 100%;
+        background-color: rgb(192, 201, 183);
+        margin-top: 1%;
+        margin: auto;
+    }
+}
+
+#delete{
+    background: none;
+    border-style: none;
+    color: rgb(0, 0, 0);
+}
+
+#delete:hover{
+    color: red;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input, textarea{
+    border-radius: 5px;
+    border-style: none;
+    padding: 2px;
+    margin: 5px 0;
+}
+
+button{
+    border-style: none;
+    color: rgb(7, 0, 0);
+    font-weight: bold;
+    background: linear-gradient(35deg,#1d9599, #30c2c7);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.pronunciation{
+    color: green;
+}
+
+.example{
+    color:red;
+}
+
